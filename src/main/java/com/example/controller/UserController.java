@@ -17,7 +17,7 @@ package com.example.controller;
  import org.springframework.web.servlet.ModelAndView;
 
  import com.example.model.User;
- import com.example.dao.*;
+ import com.example.dao.UserRepository;
  import com.example.dto.*;
  import com.example.util.*;
 
@@ -26,11 +26,13 @@ package com.example.controller;
  @RequestMapping("/api/")
  public class UserController {
 
-    @Autowired
-    private UserRepository userRepo;
+    @Autowired private UserRepository userRepo;
 
     @GetMapping("member-management")
     public String listMember() {
+        String nameString = "ss";
+        User parent = userRepo.findByName(nameString);
+
         return "xxx";
     }
 
