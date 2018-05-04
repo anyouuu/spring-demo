@@ -28,10 +28,18 @@ public class UserController
 //            @ApiImplicitParam(name = "name", value = "name", required = true, dataType = "String"),
 //            @ApiImplicitParam(name = "pwd", value = "password", required = true, dataType = "String")
 //    })
-    @RequestMapping(value = "/add/{id}/{name}/{pwd}", method = RequestMethod.GET)
-    public User addUser(@PathVariable int id, @PathVariable String name,
+    @RequestMapping(value = "/add/{name}/{pwd}", method = RequestMethod.POST)
+    public User addUser( @PathVariable String name,
                         @PathVariable String pwd)
     {
+        User user = new User();
+        user.setName(name);
+        user.setPwd(pwd);
+        userService.saveUser(user);
+        return user;
+    }
+
+    private User save(int id ,String name ,String pwd) {
         User user = new User();
         user.setId(id);
         user.setName(name);
@@ -40,33 +48,40 @@ public class UserController
         return user;
     }
 
-    @RequestMapping(value = "/delete/{id}")
+    @RequestMapping(value = "/add/{id}/{name}/{pwd}", method = RequestMethod.PUT)
+    public User updateUser(@PathVariable int id, @PathVariable String name,
+                        @PathVariable String pwd)
+    {
+        return this.save(id, name, pwd);
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public void deleteBook(@PathVariable int id)
     {
         userService.delete(id);
     }
 
-    @RequestMapping(value = "/")
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<User> getBooks()
     {
         return userService.findAll();
     }
 
-    @RequestMapping(value = "/{id}")
+    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
     public User getUser(@PathVariable int id)
     {
         User user = userService.findOne(id);
         return user;
     }
 
-    @RequestMapping(value = "/search/name/{name}")
+    @RequestMapping(value = "/search/name/{name}", method = RequestMethod.GET)
     public List<User> getBookByName(@PathVariable String name)
     {
         List<User> users = userService.findByName(name);
         return users;
     }
 
-    @RequestMapping(value = "/search/pwd/{pwd}")
+    @RequestMapping(value = "/search/pwd/{pwd}", method = RequestMethod.GET)
     public List<User> getInfoByPwd(@PathVariable String pwd)
     {
 
