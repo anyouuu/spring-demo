@@ -35,6 +35,15 @@ public class UserServiceImpl implements IUserService
         return userRepository.findByName(name);
     }
 
+    public List<User> findByPassword(String pwd)
+    {
+
+        List<User> userList3 = userRepository.findByPwd(pwd);
+
+        System.out.println("userList3:" + userList3);
+        return userList3;
+    }
+
     public void saveUser(User book)
     {
         userJpaRepository.save(book);

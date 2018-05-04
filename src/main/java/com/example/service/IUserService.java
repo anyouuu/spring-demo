@@ -14,4 +14,6 @@ public interface IUserService {
     public void delete(long id);
 
     public List<User> findByName(String name);
+
+    public List<User> findByPassword(String pwd);
 }

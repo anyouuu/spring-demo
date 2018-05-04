@@ -11,4 +11,8 @@ public interface UserRepository extends UserJpaRepository {
 
     List<User> findByName(String name);
 
+
+    @Query("select u from User u where u.pwd = ?1")
+    List<User> findByPwd(String pwd);
+
 }
