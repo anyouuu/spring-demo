@@ -9,9 +9,9 @@ public interface IUserService {
 
     public void saveUser(User book);
 
-    public User findOne(long id);
-
-    public void delete(long id);
+    public User findOne(Integer id);
+ 
+    public void delete(Integer id);
 
     public List<User> findByName(String name);
 

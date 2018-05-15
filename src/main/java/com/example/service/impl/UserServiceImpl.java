@@ -50,13 +50,13 @@ public class UserServiceImpl implements IUserService
     }
 
     @Cacheable("users")
-    public User findOne(long id)
+    public User findOne(Integer id)
     {
         System.out.println("Cached Pages");
         return userJpaRepository.findOne(id);
     }
 
-    public void delete(long id)
+    public void delete(Integer id)
     {
         userJpaRepository.delete(id);
     }

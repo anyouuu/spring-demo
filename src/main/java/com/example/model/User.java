@@ -1,51 +1,31 @@
 package com.example.model;
 
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
 
 import java.io.Serializable;
 
 
 @Entity
+@Data
 @Table (name = "t_user")
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    Integer id;
     @Column(name = "name")
     String name;
     @Column(name = "pwd")
     String pwd;
-
-    public long getId()
-    {
-        return id;
-    }
-
-    public void setId(int id)
-    {
-        this.id = id;
-    }
-
-    public String getName()
-    {
-        return name;
-    }
-
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
-    public String getPwd()
-    {
-        return pwd;
-    }
-
-    public void setPwd(String pwd)
-    {
-        this.pwd = pwd;
-    }
+    @Column(name = "age")
+    Integer age;
 
 }

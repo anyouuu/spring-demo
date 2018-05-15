@@ -2,14 +2,13 @@ package com.example.controller;
 
 import java.util.List;
 
+import com.example.exception.ExceptionHandle;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 
 import com.example.model.User;
 import com.example.service.IUserService;
@@ -18,6 +17,9 @@ import com.example.service.IUserService;
 @RequestMapping(value = "/users")
 public class UserController
 {
+
+    @Autowired
+    private ExceptionHandle exceptionHandle;
 
     @Autowired
     private IUserService userService;
@@ -29,13 +31,15 @@ public class UserController
 //            @ApiImplicitParam(name = "pwd", value = "password", required = true, dataType = "String")
 //    })
     @RequestMapping(value = "/add/{name}/{pwd}", method = RequestMethod.POST)
-    public User addUser( @PathVariable String name,
-                        @PathVariable String pwd)
+    public User addUser( User u)
     {
         User user = new User();
-        user.setName(name);
-        user.setPwd(pwd);
+        user.setId(10);
+        user.setName(u.getName());
+        user.setPwd(u.getPwd());
+        user.setAge(u.getAge());
         userService.saveUser(user);
+        System.out.println("out = " + user.getId());
         return user;
     }
 
@@ -72,6 +76,27 @@ public class UserController
     {
         User user = userService.findOne(id);
         return user;
+    }
+
+    @GetMapping(value = "/testAfterReturning01/{str}")
+    public String testAfterReturning01(String keys) {
+        return "返回值 keys=:"+keys;
+    }
+
+
+    @GetMapping(value = "/testAfterReturning")
+    public Integer testAfterReturning (Integer key) {
+        try {
+            if (key.equals(11)) {
+                return 11;
+            } else {
+                return 0;
+            }
+        } catch (Exception e) {
+            exceptionHandle.handler(e);
+            System.out.println("xxxx");
+        }
+        return key;
     }
 
     @RequestMapping(value = "/search/name/{name}", method = RequestMethod.GET)
